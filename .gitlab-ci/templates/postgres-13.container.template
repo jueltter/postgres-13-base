@@ -1,0 +1,32 @@
+# ~/.config/containers/systemd/postgres-13.container
+
+[Unit]
+Description=PostgreSQL 13 Database Container
+After=network-online.target
+
+[Container]
+ContainerName=postgres-13
+Image=$IMAGE_NAME:$IMAGE_TAG
+PublishPort=5432:5432
+PublishPort=2240:22
+EnvironmentFile=%h/.config/containers/systemd/postgres-13/.env
+Exec=postgres -c config_file=/etc/postgresql/postgresql.conf
+Volume=postgres-13-data.volume:/var/lib/postgresql/data
+Volume=postgres-13-backups.volume:/backups
+# Force the log driver to a file-based format so the size limits apply correctly
+LogDriver=k8s-file
+# Pass the log rotation limits directly to the underlying podman run command
+PodmanArgs=--log-opt max-size=50m --log-opt max-file=3
+
+
+# Healthcheck configuration
+HealthCmd="pg_isready -U postgres -d postgres"
+HealthInterval=30s
+HealthTimeout=10s
+HealthRetries=3
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

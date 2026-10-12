@@ -18,4 +18,4 @@ ENV LC_CTYPE es_EC.UTF-8
 ENV LC_TIME es_EC.UTF-8
 ENV LC_NUMERIC es_EC.UTF-8
 
-COPY conf/postgres.conf /etc/postgresql/postgresql.conf
+COPY .gitlab-ci/container/assemble/postgres.conf /etc/postgresql/postgresql.conf

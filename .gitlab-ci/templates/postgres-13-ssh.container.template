@@ -1,0 +1,19 @@
+# ~/.config/containers/systemd/postgres-13-ssh.container
+
+[Unit]
+Description=PostgreSQL SSH Administration Sidecar
+After=postgres-13.service
+Requires=postgres-13.service
+
+[Container]
+ContainerName=postgres-13-ssh
+Image=$IMAGE_NAME:$IMAGE_TAG
+EnvironmentFile=%h/.config/containers/systemd/postgres-13-ssh/.env
+Network=container:postgres-13
+Volume=postgres-13-backups.volume:/backups
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
