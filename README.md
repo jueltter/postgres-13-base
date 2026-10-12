@@ -2,20 +2,13 @@
 
 ## Usage guide
 
-### .env
-```properties
-POSTGRES_PASSWORD=Password1234#
-```
+```bash
+# generate .env file by copying template, change variables
+cp .env.example .env
 
-### compose.yml
-```yml
-# ... lines omitted
-        env_file:
-            - .env
-        command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
-# ... lines omitted
+# run service
+docker compose up -d
 ```
-
 
 ## License
 
